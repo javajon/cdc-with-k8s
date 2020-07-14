@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: h2-world
+  labels:
+    app: h2-world
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: h2-world
+  template:
+    metadata:
+      labels:
+        app: h2-world
+      name: h2-world
+
+    spec:
+
+      volumes:
+      - name: h2-storage
+        emptyDir: {}
+
+      containers:
+      - name: h2-world
+        image: thomseno/h2:1.4.200
+        env:
+        - name: TRACE_LEVEL_SYSTEM_OUT
+          value: "3"
+        ports:
+        - name: web-port
+          containerPort: 8082
+        - name: jdbc-port
+          containerPort: 9092
+        volumeMounts:
+        - name: h2-storage
+          mountPath: /h2-data
+
+      initContainers:
+      - name: h2-world-seeder
+        image: localhost:5000/h2-seeder:0.0.1
+        volumeMounts:
+        - name: h2-storage
+          mountPath: /h2-data
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: h2-world
+  labels:
+    app: h2-world
+spec:
+  type: NodePort
+  selector:
+    app: h2-world
+  ports:
+  - name: web
+    protocol: TCP
+    port: 80
+    targetPort: web-port
+    nodePort: 30100
+  - name: jdbc
+    protocol: TCP
+    port: 9092
+    targetPort: jdbc-port
+    nodePort: 30092

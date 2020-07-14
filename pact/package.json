@@ -1,0 +1,26 @@
+{
+  "name": "pact",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:consumer": "jest consumer/consumer-contract.spec.js --env=node",
+    "can:i:deploy:consumer": "pact-broker can-i-deploy --pacticipant Consumer --version $CIRCLE_SHA1 --pacticipant Provider --latest staging --broker-base-url $PACT_BROKER_URL",
+    "publish:pact": "pact-broker publish ./pacts --consumer-app-version $CIRCLE_SHA1 --broker-base-url $PACT_BROKER_URL --broker-token $PACT_BROKER_TOKEN",
+    "publish:test": "pact-broker publish ./pacts --consumer-app-version 1.0.101 --broker-base-url $PACT_BROKER_URL --broker-username=$PACT_BROKER_USERNAME --broker-password=$PACT_BROKER_PASSWORD",
+    "test:provider": "node provider/provider-service.js & jest provider/provider-contract.spec.js --testTimeout=10000",
+    "create:provider:tag": "pact-broker create-version-tag --pacticipant Provider --version 1.0.0 --tag staging --broker-base-url $PACT_BROKER_URL",
+    "create:consumer:tag": "pact-broker create-version-tag --pacticipant Consumer --version $CIRCLE_SHA1 --tag staging --broker-base-url $PACT_BROKER_URL"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "joi": "^14.3.1"
+  },
+  "devDependencies": {
+    "@pact-foundation/pact": "^9.11.0",
+    "axios": "^0.19.2",
+    "jest": "^25.2.7"
+  }
+}

@@ -1,0 +1,1 @@
+Some inspiration from http://zetcode.com/springboot/h2/

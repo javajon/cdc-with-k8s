@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: covid-19
+  name: covid-19
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: covid-19
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: covid-19
+    spec:
+      containers:
+      - image: localhost:5000/covid-19:0.0.1
+        name: covid-19
+        ports:
+        - containerPort: 8080
+          name: rest-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: covid-19
+  labels:
+    app: covid-19
+spec:
+  type: NodePort
+  selector:
+    app: covid-19
+  ports:
+  - name: rest
+    port: 80
+    targetPort: rest-port
+    nodePort: 30102
