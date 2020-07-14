@@ -19,9 +19,9 @@ spec:
         name: pact-broker
         env:
         - name: PACT_BROKER_DATABASE_USERNAME
-          value: "pact"
+          value: "pactbroker"
         - name: PACT_BROKER_DATABASE_PASSWORD
-          value: "123456"
+          value: "pactbroker"
         - name: PACT_BROKER_DATABASE_HOST
           value: "pact-postgres-service"
         - name: PACT_BROKER_DATABASE_NAME

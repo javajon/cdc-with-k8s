@@ -19,9 +19,9 @@ spec:
         name: pact-postgres
         env:
         - name: POSTGRES_PASSWORD
-          value: "123456"
+          value: "pactbroker"
         - name: POSTGRES_USER
-          value: "pact"
+          value: "pactbroker"
         - name: POSTGRES_DB
           value: "pact"
         ports:
