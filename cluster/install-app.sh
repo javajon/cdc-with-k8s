@@ -1,11 +1,14 @@
 #!/bin/bash
 
-kubectl delete -f h2-world.yaml 
-kubectl delete -f world-pop.yaml 
-kubectl delete -f covid-19.yaml 
-kubectl delete -f aggregator.yaml 
+if [[ "$*" == 'clean' ]]
+then
+    kubectl delete -f h2-world.yaml 
+    kubectl delete -f world-pop.yaml 
+    kubectl delete -f covid-19.yaml 
+    kubectl delete -f aggregator.yaml 
+fi
 
-if [[ "$*" == 'full' ]]
+if [[ "$*" == 'build' ]]
 then
     # exit when any command fails
     set -e

@@ -40,6 +40,6 @@ spec:
   - port: 9292
     name: web
     targetPort: 9292
-    nodePort: 32753
+    nodePort: 30111
   selector:
     run: pact-broker
