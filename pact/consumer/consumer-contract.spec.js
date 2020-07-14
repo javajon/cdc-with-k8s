@@ -3,13 +3,13 @@ const { like, eachLike } = require('@pact-foundation/pact').Matchers;
 const { fetchCountries } = require('./consumer');
 const path = require('path');
 
-const PORT = 4000;
-const URL = 'http://localhost';
+const MOCK_URL = 'http://localhost';
+const MOCK_PORT = 4000;
 
 const provider = new Pact({
-  consumer: 'Consumer',
-  provider: 'Provider',
-  port: PORT,
+  consumer: 'Consumer A',
+  provider: 'Aggregator',
+  port: MOCK_PORT,
   log: path.resolve(process.cwd(), 'logs', 'pact.log'),
   dir: path.resolve(process.cwd(), 'pacts'),
   logLevel: 'INFO',
@@ -40,8 +40,8 @@ describe('Country Service', () => {
       })
     );
 
-    test('should return the correct data', async () => {
-      const response = await fetchCountries(URL, PORT);
+    test('should return the correct population', async () => {
+      const response = await fetchCountries(MOCK_URL, MOCK_PORT);
       expect(response[0].code).toBe('AFG');
       expect(response[0].name).toBe('Afganistan');
       expect(response[0].population).toBe(22720000);
