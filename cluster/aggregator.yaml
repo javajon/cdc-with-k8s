@@ -16,8 +16,9 @@ spec:
         app: aggregator
     spec:
       containers:
-      - image: localhost:5000/aggregator:0.0.1
-        name: aggregator
+      - name: aggregator
+        image: localhost:5000/aggregator:0.0.1
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
           name: rest-port
