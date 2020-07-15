@@ -21,7 +21,6 @@ plugins {
 group = 'com.dijure'
 version = '0.0.1'
 sourceCompatibility = '11'
-systemProperty "pact.verifier.publishResults", true
 
 repositories {
 	mavenCentral()
