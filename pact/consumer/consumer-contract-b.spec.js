@@ -23,7 +23,7 @@ const provider = new Pact({
             uponReceiving: 'a request to list all countries',
             withRequest: {
               method: 'GET',
-              path: '/countries',
+              path: '/countries/percapita',
             },
             willRespondWith: {
               status: 200,
