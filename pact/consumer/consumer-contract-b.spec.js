@@ -1,6 +1,6 @@
 const { Pact } = require('@pact-foundation/pact');
 const { like, eachLike } = require('@pact-foundation/pact').Matchers;
-const { fetchCountries } = require('./consumer');
+const { fetchHighestPerCapita } = require('./consumer');
 const path = require('path');
 
 const MOCK_URL = 'http://localhost';
@@ -42,7 +42,7 @@ const provider = new Pact({
       );
 
     test('countries list ordered by percentCases', async () => {
-      const response = await fetchCountries(MOCK_URL, MOCK_PORT);
+      const response = await fetchHighestPerCapita(MOCK_URL, MOCK_PORT);
       expect(response[0].code).toBe('IND');
       expect(response[0].name).toBe('India');
       expect(response[0].population).toBe(1353200000);
