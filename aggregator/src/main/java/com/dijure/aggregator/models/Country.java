@@ -64,7 +64,7 @@ public class Country {
     }
 
     public double getPercentCases() {
-        population = 0; // TODO, remove, just want to see service is still stable. 
+        population = 0; // TODO, remove, just want to see service is still stable with zero condition 
         return population == 0 ? 0.0 : (double)latestTotalCases / (double)population;
     }
 

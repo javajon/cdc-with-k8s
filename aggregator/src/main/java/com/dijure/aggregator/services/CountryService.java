@@ -19,8 +19,8 @@ public class CountryService {
 
     public Country[] findAll() {
         String url = "http://world-pop/countries";
-        RestTemplate restTemplate = new RestTemplate(); 
-        Country[] countries = restTemplate.getForObject( url, Country[].class);
+        RestTemplate restTemplate = new RestTemplate();
+        Country[] countries = restTemplate.getForObject(url, Country[].class);
 
         return merge(countries);
     }
@@ -51,6 +51,7 @@ public class CountryService {
 
 
     private Country[] merge(Country[] countries) {
+        // Lazy load and cache to avoid calling public service too much.
         if (metrics.getMetrics().isEmpty()) {
             metrics = findMetrics();
         }
@@ -64,18 +65,16 @@ public class CountryService {
 
     private void merge(Country country) {
         for (LocationMetrics metric : metrics.getMetrics()) {
-            if (metric.getCountry().equalsIgnoreCase(country.getName())) {
+             if (metric.getCountry().equalsIgnoreCase(country.getName())) {
                 country.setLatestTotalCases(metric.getLatestTotalCases());
                 country.setDiffFromPrevDay(metric.getDiffFromPrevDay());
-                break;
             }
         }
     }
 
-    private Metrics findMetrics()
-    {
+    private Metrics findMetrics() {
         String url = "http://covid-19/metrics";
-        RestTemplate restTemplate = new RestTemplate(); 
-        return restTemplate.getForObject( url, Metrics.class);
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(url, Metrics.class);
     }
 }
