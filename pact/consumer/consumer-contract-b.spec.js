@@ -1,5 +1,5 @@
 const { Pact } = require('@pact-foundation/pact');
-const { like, eachLike } = require('@pact-foundation/pact').Matchers;
+const { like, eachLike, term } = require('@pact-foundation/pact').Matchers;
 const { fetchHighestPerCapita } = require('./consumer');
 const path = require('path');
 
@@ -32,7 +32,7 @@ const provider = new Pact({
                   code: like("IND"),
                   name: like('India'),
                   population: like(1353200000),
-                  percentCases: like(0.33000000),
+                  percentCases: term({ generate: "0.3333", matcher: "^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]+\.[0-9]*[1-9][0-9]*)$" }),
                 },
                 { min: 3 }
               ),
@@ -46,7 +46,7 @@ const provider = new Pact({
       expect(response[0].code).toBe('IND');
       expect(response[0].name).toBe('India');
       expect(response[0].population).toBe(1353200000);
-      expect(response[0].percentCases).toBeGreaterThan(0.0);
+      expect(Number(response[0].percentCases)).toBeGreaterThan(0.0);
     });
 
     afterEach(() => provider.verify());
