@@ -46,7 +46,7 @@ String getPactBrokerEndpoint() {
 
 /** Location where the actual service runs, ready to accept the PACT for verification. */
 int getProviderServiceNodePort() {
-	return new DefaultKubernetesClient().inNamespace('default').services().withName('ms-cities').get().getSpec().getPorts().nodePort.get(0)
+	return new DefaultKubernetesClient().inNamespace('default').services().withName('aggregator').get().getSpec().getPorts().nodePort.get(0)
 }
 
 /** Location where the Pact broker is ready to server Pacts from. */
@@ -63,28 +63,19 @@ String getClusterHost() {
 /* The task pactVerify will verify the contracts.
  * See https://github.com/DiUS/pact-jvm/tree/master/provider/gradle
  */
-
 pact {
     // These are to test the contract against the real providers.
     // You can define as many providers as you need, but each must
     // have a unique name.
     serviceProviders {
 
-        largestCitiesProvider {
+        Aggregator {
             protocol = 'http'
 			if ('pactVerify' in gradle.startParameter.taskNames) {
-				host = getClusterHost()
-				port = getProviderServiceNodePort()
-				hasPactsFromPactBroker(getPactBrokerEndpoint())
-			}
-		}
-
-        // denverProvider {
-        //     protocol = 'http'
-        //     host = getClusterHost()
-        //     port = getProviderServiceNodePort()
-        //     hasPactsFromPactBroker(getPactBrokerEndpoint())
-        // }
-
+                host = getClusterHost()
+                port = getProviderServiceNodePort()
+                hasPactsFromPactBroker(getPactBrokerEndpoint())
+            }
+        }
     }
 }

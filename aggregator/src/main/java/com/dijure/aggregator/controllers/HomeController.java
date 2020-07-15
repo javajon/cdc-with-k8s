@@ -29,7 +29,7 @@ public class HomeController {
         return countryService.findById(countryCode);
     }
 
-    @GetMapping("/percapita")
+    @GetMapping("/countries/percapita")
     public Country[] perCapita() {
         return countryService.perCapita();
     }

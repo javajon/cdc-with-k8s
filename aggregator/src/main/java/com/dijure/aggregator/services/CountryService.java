@@ -1,7 +1,6 @@
 package com.dijure.aggregator.services;
 
 import com.dijure.aggregator.models.Metrics;
-import com.fasterxml.jackson.databind.introspect.ConcreteBeanPropertyBase;
 
 import java.util.Arrays;
 import java.util.List;

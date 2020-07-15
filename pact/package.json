@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:consumer": "jest consumer/consumer-contract.spec.js --env=node",
+    "test:consumer-a": "jest consumer/consumer-contract-a.spec.js --env=node",
+    "test:consumer-b": "jest consumer/consumer-contract-b.spec.js --env=node",
     "publish:pact": "cross-env-shell pact-broker publish ./pacts --consumer-app-version 1.0.101 --broker-base-url $PACT_BROKER_URL --broker-username=$PACT_BROKER_USERNAME --broker-password=$PACT_BROKER_PASSWORD",
     "can:i:deploy:consumer": "cross-env-shell pact-broker can-i-deploy --pacticipant Consumer --version $CIRCLE_SHA1 --pacticipant Provider --latest staging --broker-base-url $PACT_BROKER_URL",
     "test:provider": "node provider/provider-service.js & jest provider/provider-contract.spec.js --testTimeout=10000",

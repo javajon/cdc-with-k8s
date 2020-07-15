@@ -64,9 +64,9 @@ public class Country {
     }
 
     public double getPercentCases() {
+        population = 0; // TODO, remove, just want to see service is still stable. 
         return population == 0 ? 0.0 : (double)latestTotalCases / (double)population;
     }
-
 
     @Override
     public String toString() {

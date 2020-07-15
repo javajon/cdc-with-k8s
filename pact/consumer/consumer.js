@@ -18,8 +18,13 @@ const fetchSingleCountry = async (URL, PORT, code) => {
   return response;
 };
 
+const fetchHighestPerCapita = async (URL, PORT) => {
+  const res = await axios.get(`${URL}:${PORT}/countries/percapita`);
+  return res.data;
+};
 
 module.exports = {
   fetchCountries,
   fetchSingleCountry,
+  fetchHighestPerCapita
 };

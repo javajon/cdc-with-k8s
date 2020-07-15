@@ -33,7 +33,7 @@ describe('Country Service', () => {
                 name: like('Afganistan'),
                 population: like(22720000),
               },
-              { min: 5 }
+              { min: 3 }
             ),
           },
         });
