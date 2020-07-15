@@ -12,20 +12,17 @@ public class HomeController {
     private CountryService countryService = new CountryService();
 
     @GetMapping("/ping")
-    public String test() {
-
+    public String ping() {
         return "OK, phew, that worked. Reported from " + getClass().getName();
     }
 
     @GetMapping("/countries")
     public Country[] findCountries() {
-
         return countryService.findAll();
     }
 
     @GetMapping("/countries/{countryCode}")
     public Country findCountry(@PathVariable String countryCode) {
-
         return countryService.findById(countryCode);
     }
 

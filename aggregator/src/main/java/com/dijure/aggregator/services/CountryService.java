@@ -2,10 +2,7 @@ package com.dijure.aggregator.services;
 
 import com.dijure.aggregator.models.Metrics;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 import com.dijure.aggregator.models.Country;
 import com.dijure.aggregator.models.LocationMetrics;
@@ -22,7 +19,20 @@ public class CountryService {
         RestTemplate restTemplate = new RestTemplate();
         Country[] countries = restTemplate.getForObject(url, Country[].class);
 
-        return merge(countries);
+        return filterUnknowns(merge(countries));
+    }
+
+    private Country[] filterUnknowns(Country[] countries) {
+        List<Country> modifiableCountries = new ArrayList<>(Arrays.asList(countries));
+        Iterator<Country> countryIterator = modifiableCountries.iterator();
+        while(countryIterator.hasNext()) {
+            Country country = countryIterator.next();
+            if (country.getPopulation() == 0 || country.getLatestTotalCases() == 0) {
+                countryIterator.remove();
+            }
+        }
+
+        return modifiableCountries.toArray(new Country[modifiableCountries.size()]);
     }
 
     public Country findById(String code) {
@@ -39,12 +49,7 @@ public class CountryService {
     /** Highest cases per capita. */
     public Country[] perCapita() {
         List<Country> countries = Arrays.asList(findAll());
-        Collections.sort(countries, new Comparator<Country>() {
-            @Override
-            public int compare(Country o1, Country o2) {
-                return Double.compare(o2.getPercentCases(), o1.getPercentCases());
-            }
-        });
+        Collections.sort(countries, (o1, o2) -> Double.compare(o2.getPercentCases(), o1.getPercentCases()));
 
         return countries.toArray(new Country[countries.size()]);
     }
@@ -65,9 +70,10 @@ public class CountryService {
 
     private void merge(Country country) {
         for (LocationMetrics metric : metrics.getMetrics()) {
-             if (metric.getCountry().equalsIgnoreCase(country.getName())) {
+            if (metric.getCountry().equalsIgnoreCase(country.getName())) {
                 country.setLatestTotalCases(metric.getLatestTotalCases());
                 country.setDiffFromPrevDay(metric.getDiffFromPrevDay());
+                break;
             }
         }
     }

@@ -8,7 +8,7 @@ public class Country {
 
     private String code;
     private String name;
-    private int population;
+    private int population = 1;
     private int latestTotalCases;
     private int diffFromPrevDay;
 
@@ -64,7 +64,7 @@ public class Country {
     }
 
     public double getPercentCases() {
-        population = 0; // TODO, remove, just want to see service is still stable with zero condition 
+        population = 0; // TODO, remove, just want to see service is still stable with zero condition
         return population == 0 ? 0.0 : (double)latestTotalCases / (double)population;
     }
 
