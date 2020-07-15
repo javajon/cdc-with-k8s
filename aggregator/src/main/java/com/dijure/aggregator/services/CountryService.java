@@ -49,7 +49,7 @@ public class CountryService {
     /** Highest cases per capita. */
     public Country[] perCapita() {
         List<Country> countries = Arrays.asList(findAll());
-        Collections.sort(countries, (o1, o2) -> Double.compare(o2.getPercentCases(), o1.getPercentCases()));
+        Collections.sort(countries, (o1, o2) -> Double.compare(Double.parseDouble(o2.getPercentCases()), Double.parseDouble(o1.getPercentCases())));
 
         return countries.toArray(new Country[countries.size()]);
     }
