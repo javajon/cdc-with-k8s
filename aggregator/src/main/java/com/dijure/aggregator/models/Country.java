@@ -63,9 +63,9 @@ public class Country {
         this.diffFromPrevDay = diffFromPrevDay;
     }
 
-    public double getPercentCases() {
+    public String getPercentCases() {
         population = 0; // TODO, remove, just want to see service is still stable with zero condition
-        return population == 0 ? 0.0 : (double)latestTotalCases / (double)population;
+        return String.format("%.5f", population == 0 ? 0.0 : (double)latestTotalCases / (double)population);
     }
 
     @Override

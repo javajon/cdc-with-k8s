@@ -33,6 +33,7 @@ const provider = new Pact({
                   name: like('India'),
                   population: like(1353200000),
                   percentCases: term({ generate: "0.3333", matcher: "^([0-9]*[1-9][0-9]*(\.[0-9]+)?|[0]+\.[0-9]*[1-9][0-9]*)$" }),
+                  // The regex is match roughly any integer or floating number greater than 0
                 },
                 { min: 3 }
               ),
