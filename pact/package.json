@@ -15,13 +15,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4",
-    "joi": "^14.3.1"
+    "express": "^4.17.1",
+    "joi": "^17.3.0"
   },
   "devDependencies": {
-    "@pact-foundation/pact": "^9.11.0",
+    "@pact-foundation/pact": "^9.14.0",
     "axios": "^0.21.1",
-    "jest": "^25.2.7",
-    "cross-env": "^7.0.2"
+    "jest": "^26.6.3",
+    "cross-env": "^7.0.3"
   }
 }
