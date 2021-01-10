@@ -1,10 +1,10 @@
 # Consumer-driven Contracts with Kubernetes
 
-## Learn how to use the Pact Foundation's framework for CDC testing.
+## Learn how to use the Pact Foundation's framework for CDC testing
 
-This project contains the source code for demonstating consumer-driven contact testing using [Pact](https://docs.pact.io/). The application aggregates population and COVID-19 datasources and presents data at an API gateway. The entire application and Pact testing runs on Kubernetes. 
+This project contains the source code for demonstrating consumer-driven contact testing using [Pact](https://docs.pact.io/). The application aggregates population and COVID-19 datasources and presents data at an API gateway. The entire application and Pact testing runs on Kubernetes.
 
-<img src="/docs/demo-app-arch.png" alt="Demonstration application architecture"/>
+<img src="/docs/app-arch.png" alt="Demonstration application architecture"/>
 
 There are 6 directories for the following purposes:
 
