@@ -12,9 +12,9 @@ import io.fabric8.kubernetes.client.DefaultKubernetesClient
 import io.fabric8.kubernetes.client.KubernetesClientException
 
 plugins {
-	id 'org.springframework.boot' version '2.3.1.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-    id 'au.com.dius.pact' version '4.1.6'
+	id 'org.springframework.boot' version '2.4.1'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'au.com.dius.pact' version '4.1.13'
 	id 'java'
 }
 
