@@ -1,12 +1,14 @@
-FROM busybox:1.32.0 AS h2-sourcer
+FROM busybox:1.36.1 AS h2-sourcer
 
 # Get h2.jar that offers RunScript tool
-ARG H2_VERSION=1.4.200
+# ARG H2_VERSION=1.4.200
+ARG H2_VERSION=2.3.232
 ENV DOWNLOAD https://repo1.maven.org/maven2/com/h2database/h2/${H2_VERSION}/h2-${H2_VERSION}.jar
 RUN wget -O h2.jar $DOWNLOAD
 
 
-FROM openjdk:14-alpine
+# FROM openjdk:14-alpine
+FROM openjdk:21-alpine
 LABEL maintainer="dijure.com jonathan.johnson@dijure.com"
 
 # Get artifact from above

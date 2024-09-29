@@ -23,7 +23,7 @@ spec:
 
       containers:
       - name: h2-world
-        image: thomseno/h2:1.4.200
+        image: thomseno/h2:2.2.224
         env:
         - name: TRACE_LEVEL_SYSTEM_OUT
           value: "3"
@@ -38,7 +38,7 @@ spec:
 
       initContainers:
       - name: h2-world-seeder
-        image: localhost:5000/h2-seeder:0.0.1
+        image: localhost:5000/h2-seeder:3.0.0
         volumeMounts:
         - name: h2-storage
           mountPath: /h2-data

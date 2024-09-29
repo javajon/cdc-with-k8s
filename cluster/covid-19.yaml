@@ -16,7 +16,7 @@ spec:
         app: covid-19
     spec:
       containers:
-      - image: localhost:5000/covid-19:0.0.1
+      - image: localhost:5000/covid-19:3.0.0
         name: covid-19
         ports:
         - containerPort: 8080

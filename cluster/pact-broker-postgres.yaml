@@ -15,7 +15,7 @@ spec:
         run: pact-postgres
     spec:
       containers:
-      - image: postgres:9.5
+      - image: postgres:17.0
         name: pact-postgres
         env:
         - name: POSTGRES_PASSWORD

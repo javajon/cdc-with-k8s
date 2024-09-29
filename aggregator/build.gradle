@@ -1,26 +1,19 @@
-/*
- * Here a Java API is brought into to access information about what is running on the Kubernetes cluster.
- * The get methods below programmatically find the location of the pact broker and the producer service to test.
- */
-buildscript {
-    dependencies {
-        classpath 'io.fabric8:kubernetes-client:4.10.2'
-    }
-}
-
-import io.fabric8.kubernetes.client.DefaultKubernetesClient
-import io.fabric8.kubernetes.client.KubernetesClientException
-
 plugins {
-	id 'org.springframework.boot' version '2.4.1'
-	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-    id 'au.com.dius.pact' version '4.1.13'
 	id 'java'
+	id 'org.springframework.boot' version '3.3.4'
+	id 'io.spring.dependency-management' version '1.1.6'
+	
+    id 'au.com.dius.pact' version '4.6.14'  // '4.1.13'
 }
 
 group = 'com.dijure'
-version = '0.0.1'
-sourceCompatibility = '11'
+version = '3.0.0-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
 
 repositories {
 	mavenCentral()
@@ -28,54 +21,10 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-test {
+tasks.named('test') {
 	useJUnitPlatform()
-}
-
-
-
-/** Where the PACT files are stored and retrieved. */
-String getPactBrokerEndpoint() {
-	return "http://" + getClusterHost() + ":" + getPactBrokerServiceNodePort()
-}
-
-/** Location where the actual service runs, ready to accept the PACT for verification. */
-int getProviderServiceNodePort() {
-	return new DefaultKubernetesClient().inNamespace('default').services().withName('aggregator').get().getSpec().getPorts().nodePort.get(0)
-}
-
-/** Location where the Pact broker is ready to server Pacts from. */
-int getPactBrokerServiceNodePort() {
-	return new DefaultKubernetesClient().inNamespace('default').services().withName('pact-broker-service').get().getSpec().getPorts().nodePort.get(0)
-}
-
-/** The IP of the Kubernetes host. */
-String getClusterHost() {
-	return new DefaultKubernetesClient().getMasterUrl().host
-}
-
-
-/* The task pactVerify will verify the contracts.
- * See https://github.com/DiUS/pact-jvm/tree/master/provider/gradle
- */
-pact {
-    // These are to test the contract against the real providers.
-    // You can define as many providers as you need, but each must
-    // have a unique name.
-    serviceProviders {
-
-        Aggregator {
-            protocol = 'http'
-			if ('pactVerify' in gradle.startParameter.taskNames) {
-                host = getClusterHost()
-                port = getProviderServiceNodePort()
-                hasPactsFromPactBroker(getPactBrokerEndpoint())
-            }
-        }
-    }
 }

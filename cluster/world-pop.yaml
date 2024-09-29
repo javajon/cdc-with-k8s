@@ -16,7 +16,7 @@ spec:
         app: world-pop
     spec:
       containers:
-      - image: localhost:5000/world-pop:0.0.1
+      - image: localhost:5000/world-pop:3.0.0
         name: world-pop
         ports:
         - containerPort: 8080

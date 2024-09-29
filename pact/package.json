@@ -1,28 +1,29 @@
 {
-  "name": "pact",
-  "version": "1.1.0",
-  "description": "",
-  "main": "index.js",
+  "name": "pact-consumer-example",
+  "version": "3.0.0",
+  "author": "Jonathan Johnson",
+  "license": "MIT",
+  "description": "This was inspired from [Marie Drake](https://www.mariedrake.com/) who wrote the article [Contract Testing with Pact.js and Jest](https://www.mariedrake.com/post/contract-testing-with-pact-js-and-jest)",
   "scripts": {
-    "test:consumer-a": "jest consumer/consumer-contract-a.spec.js --env=node",
-    "test:consumer-b": "jest consumer/consumer-contract-b.spec.js --env=node",
-    "publish:pact": "cross-env-shell pact-broker publish ./pacts --consumer-app-version 1.0.101 --broker-base-url $PACT_BROKER_URL --broker-username=$PACT_BROKER_USERNAME --broker-password=$PACT_BROKER_PASSWORD",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:consumer-a": "jest src/consumer/consumer-contract-a.spec.js --env=node",
+    "test:consumer-b": "jest src/consumer/consumer-contract-b.spec.js --env=node",
+    "publish:pact": "cross-env-shell pact-broker publish ./pacts --consumer-app-version 3.0.0 --broker-base-url $PACT_BROKER_URL --broker-username=$PACT_BROKER_USERNAME --broker-password=$PACT_BROKER_PASSWORD",
     "can:i:deploy:consumer": "cross-env-shell pact-broker can-i-deploy --pacticipant Consumer --version $CIRCLE_SHA1 --pacticipant Provider --latest staging --broker-base-url $PACT_BROKER_URL",
     "test:provider": "node provider/provider-service.js & jest provider/provider-contract.spec.js --testTimeout=10000",
-    "create:provider:tag": "cross-env-shell pact-broker create-version-tag --pacticipant Provider --version 1.0.0 --tag staging --broker-base-url $PACT_BROKER_URL",
+    "create:provider:tag": "cross-env-shell pact-broker create-version-tag --pacticipant Provider --version 3.0.0 --tag staging --broker-base-url $PACT_BROKER_URL",
     "create:consumer:tag": "cross-env-shell pact-broker create-version-tag --pacticipant Consumer --version $CIRCLE_SHA1 --tag staging --broker-base-url $PACT_BROKER_URL"
   },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.1",
-    "joi": "^17.3.0"
-  },
   "devDependencies": {
-    "@pact-foundation/pact": "^9.18.1",
-    "axios": "^0.27.2",
-    "jest": "^28.1.3",
-    "jest-pact": "^0.9.4",
-    "cross-env": "^7.0.3"
+    "@pact-foundation/pact": "^13.1.3",
+    "axios": "^1.7.7",
+    "cross-env": "^7.0.3",
+    "express": "^4.21.0",
+    "jest": "^29.7.0",
+    "jest-pact": "^0.11.1",
+    "joi": "^17.13.3"
+  },
+  "dependencies": {
+    "pact": "^2.0.0"
   }
 }
