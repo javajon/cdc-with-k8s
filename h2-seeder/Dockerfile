@@ -1,8 +1,8 @@
 FROM busybox:1.36.1 AS h2-sourcer
 
 # Get h2.jar that offers RunScript tool
-# ARG H2_VERSION=1.4.200
-ARG H2_VERSION=2.3.232
+ARG H2_VERSION=1.4.200
+# ARG H2_VERSION=2.3.232 -- firewall issues in lab with this version
 ENV DOWNLOAD=https://repo1.maven.org/maven2/com/h2database/h2/${H2_VERSION}/h2-${H2_VERSION}.jar
 RUN wget -O h2.jar $DOWNLOAD
 
