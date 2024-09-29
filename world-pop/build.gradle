@@ -7,17 +7,9 @@ plugins {
 group = 'com.dijure'
 version = '3.0.0-SNAPSHOT'
 
-// java {
-// 	toolchain {
-// 		languageVersion = JavaLanguageVersion.of(21)
-// 	}
-// }
-
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-        vendor = JvmVendorSpec.ADOPTIUM
-        implementation = JvmImplementation.HOTSPOT
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }
 
@@ -31,11 +23,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-	runtimeOnly 'com.h2database:h2:2.3.232'  // 'com.h2database:h2:1.4.200'
-	
-	// testImplementation('org.springframework.boot:spring-boot-starter-test') {
-	// 	exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	// }
+	// runtimeOnly 'com.h2database:h2:2.3.232' -- cannot use new version due to firewall issue in lab
+	runtimeOnly 'com.h2database:h2:1.4.200'
 }
 
 tasks.named('test') {
