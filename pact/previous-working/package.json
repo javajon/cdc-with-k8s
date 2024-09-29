@@ -12,8 +12,8 @@
     "create:provider:tag": "cross-env-shell pact-broker create-version-tag --pacticipant Provider --version 1.0.0 --tag staging --broker-base-url $PACT_BROKER_URL",
     "create:consumer:tag": "cross-env-shell pact-broker create-version-tag --pacticipant Consumer --version $CIRCLE_SHA1 --tag staging --broker-base-url $PACT_BROKER_URL"
   },
-  "author": "Jonathan Johnson",
-  "license": "MIT",
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
     "joi": "^17.3.0"
