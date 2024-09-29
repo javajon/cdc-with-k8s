@@ -7,10 +7,18 @@ plugins {
 group = 'com.dijure'
 version = '3.0.0-SNAPSHOT'
 
+// java {
+// 	toolchain {
+// 		languageVersion = JavaLanguageVersion.of(21)
+// 	}
+// }
+
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+        vendor = JvmVendorSpec.ADOPTIUM
+        implementation = JvmImplementation.HOTSPOT
+    }
 }
 
 repositories {

@@ -23,7 +23,8 @@ spec:
 
       containers:
       - name: h2-world
-        image: thomseno/h2:2.2.224
+        # image: thomseno/h2:2.2.224  -- Possible firewall issues in lab
+        image: thomseno/h2:1.4.200
         env:
         - name: TRACE_LEVEL_SYSTEM_OUT
           value: "3"
