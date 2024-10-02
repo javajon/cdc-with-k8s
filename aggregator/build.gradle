@@ -1,3 +1,15 @@
+/*
+ * Bring in the Kubernetes client library to access information in the current Kubernetes cluster context. The get methods below programmatically find the location of the pact broker and the producer service to test.
+ */
+buildscript {
+    dependencies {
+        classpath 'io.fabric8:kubernetes-client:4.10.2'
+    }
+}
+
+import io.fabric8.kubernetes.client.DefaultKubernetesClient
+import io.fabric8.kubernetes.client.KubernetesClientException
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.4'
@@ -28,3 +40,55 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+
+/** Where the Pact files are stored and retrieved. */
+String getPactBrokerEndpoint() {
+	return "http://" + getClusterHost() + ":" + getPactBrokerPort()
+}
+
+/** The IP of the Kubernetes host. */
+String getClusterHost() {
+	return new DefaultKubernetesClient().getMasterUrl().host
+}
+
+/** Location where the actual service runs, ready to accept the PACT for verification. */
+int getProviderPort() {
+	return new DefaultKubernetesClient().inNamespace('default').services().withName('aggregator').get().getSpec().getPorts().nodePort.get(0)
+}
+
+/** Location where the Pact broker is ready to server Pacts from. */
+int getPactBrokerPort() {
+	return new DefaultKubernetesClient().inNamespace('default').services().withName('pact-broker-service').get().getSpec().getPorts().nodePort.get(0)
+}
+
+
+
+/* The task pactVerify will verify the contracts.
+ * See https://github.com/DiUS/pact-jvm/tree/master/provider/gradle
+ */
+pact {
+    // These are to test the contract against the real providers.
+    // You can define as many providers as you need, but each must
+    // have a unique name.
+    serviceProviders {
+
+        aggregatorProvider {
+            protocol = 'http'
+			if ('pactVerify' in gradle.startParameter.taskNames) {
+                host = getClusterHost()
+                port = getPactBrokerPort()
+                hasPactsFromPactBroker(getPactBrokerEndpoint())
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
