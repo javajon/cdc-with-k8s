@@ -1,9 +1,12 @@
-/*
- * Bring in the Kubernetes client library to access information in the current Kubernetes cluster context. The get methods below programmatically find the location of the pact broker and the producer service to test.
+/** 
+ * Bring in the Kubernetes client library to access information 
+ * in the current Kubernetes cluster context. The get methods below
+ * programmatically find the location of the pact broker and 
+ * the producer service to test.
  */
 buildscript {
     dependencies {
-        classpath 'io.fabric8:kubernetes-client:4.10.2'
+        classpath 'io.fabric8:kubernetes-client:6.13.4'
     }
 }
 
@@ -15,7 +18,7 @@ plugins {
 	id 'org.springframework.boot' version '3.3.4'
 	id 'io.spring.dependency-management' version '1.1.6'
 	
-    id 'au.com.dius.pact' version '4.6.14'  // '4.1.13'
+    id 'au.com.dius.pact' version '4.6.14'
 }
 
 group = 'com.dijure'
@@ -52,7 +55,7 @@ String getClusterHost() {
 	return new DefaultKubernetesClient().getMasterUrl().host
 }
 
-/** Location where the actual service runs, ready to accept the PACT for verification. */
+/** Location where the provider runs. */
 int getProviderPort() {
 	return new DefaultKubernetesClient().inNamespace('default').services().withName('aggregator').get().getSpec().getPorts().nodePort.get(0)
 }
@@ -64,9 +67,10 @@ int getPactBrokerPort() {
 
 
 
-/* The task pactVerify will verify the contracts.
- * See https://github.com/DiUS/pact-jvm/tree/master/provider/gradle
- */
+/**
+ * The task pactVerify will verify the contracts.
+ * See https://docs.pact.io/implementation_guides/jvm/provider/gradle
+ */ 
 pact {
     // These are to test the contract against the real providers.
     // You can define as many providers as you need, but each must
