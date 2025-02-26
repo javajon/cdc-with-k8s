@@ -1,3 +1,4 @@
 node_modules/
 logs/
 pacts/
+package-lock.json

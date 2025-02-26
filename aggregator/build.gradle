@@ -45,11 +45,6 @@ tasks.named('test') {
 }
 
 
-/** Where the Pact files are stored and retrieved. */
-String getPactBrokerEndpoint() {
-	return "http://" + getClusterHost() + ":" + getPactBrokerPort()
-}
-
 /** The IP of the Kubernetes host. */
 String getClusterHost() {
 	return new DefaultKubernetesClient().getMasterUrl().host
@@ -69,30 +64,24 @@ int getPactBrokerPort() {
 
 /**
  * The task pactVerify will verify the contracts.
- * See https://docs.pact.io/implementation_guides/jvm/provider/gradle
+ * See https://docs.pact.io/implementation_guides/jvm/provider/gradle#for-pact-jvm-410-and-later
  */ 
 pact {
+
+    broker {
+        pactBrokerUrl = "http://" + getClusterHost() + ":" + getPactBrokerPort()
+    }
+
     // These are to test the contract against the real providers.
     // You can define as many providers as you need, but each must
     // have a unique name.
     serviceProviders {
-
-        aggregatorProvider {
-            protocol = 'http'
-			if ('pactVerify' in gradle.startParameter.taskNames) {
-                host = getClusterHost()
-                port = getPactBrokerPort()
-                hasPactsFromPactBroker(getPactBrokerEndpoint())
+        aggregator {
+            fromPactBroker {
+                withSelectors {
+                    branch('test')
+                } 
             }
         }
     }
 }
-
-
-
-
-
-
-
-
-
