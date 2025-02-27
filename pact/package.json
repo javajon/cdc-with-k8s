@@ -7,9 +7,9 @@
     "scripts": {
         "clean": "rimraf pacts",
         "test": "npm run clean && npm run test:consumers && npm run test:publish",
-        "test:consumers": "npm run test:consumer-a && test:consumer-b",
-        "test:consumer-a": "jest consumer/consumer-contract-a.spec.js --env=node",
-        "test:consumer-b": "jest consumer/consumer-contract-b.spec.js --env=node",
+        "test:consumers": "npm run test:consumer-a && npm run test:consumer-b",
+        "test:consumer-a": "jest --runInBand consumer/consumer-contract-a.spec.js --env=node",
+        "test:consumer-b": "jest --runInBand consumer/consumer-contract-b.spec.js --env=node",
         "test:publish": "pact-broker publish ./pacts --consumer-app-version=\"$(npx absolute-version)\" --auto-detect-version-properties --broker-base-url=$PACT_BROKER_URL --broker-username=$PACT_BROKER_USERNAME --broker-password=$PACT_BROKER_PASSWORD"
     },
     "devDependencies": {
