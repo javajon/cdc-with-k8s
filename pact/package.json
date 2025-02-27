@@ -10,7 +10,7 @@
         "test:consumers": "npm run test:consumer-a && npm run test:consumer-b",
         "test:consumer-a": "jest --runInBand consumer/consumer-contract-a.spec.js --env=node",
         "test:consumer-b": "jest --runInBand consumer/consumer-contract-b.spec.js --env=node",
-        "test:publish": "pact-broker publish ./pacts --consumer-app-version=3.0.0 --auto-detect-version-properties --broker-base-url=$PACT_BROKER_URL --broker-username=$PACT_BROKER_USERNAME --broker-password=$PACT_BROKER_PASSWORD"
+        "test:publish": "pact-broker publish ./pacts --consumer-app-version=3.0.0 --broker-base-url=$PACT_BROKER_URL --broker-username=$PACT_BROKER_USERNAME --broker-password=$PACT_BROKER_PASSWORD"
     },
     "devDependencies": {
         "@pact-foundation/pact": "^14.0.0",
