@@ -1,5 +1,5 @@
-const { Pact } = require('@pact-foundation/pact');
-const { like, eachLike, term } = require('@pact-foundation/pact').Matchers;
+const { PactV2: Pact } = require('@pact-foundation/pact');
+const { like, eachLike, term } = require('@pact-foundation/pact').MatchersV2;
 const { fetchHighestPerCapita } = require('./consumer');
 const path = require('path');
 
