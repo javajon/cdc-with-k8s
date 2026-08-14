@@ -1,10 +1,10 @@
-FROM node:20-slim
+FROM node:24-slim
 
 WORKDIR /app
 
 # Copy package files and install dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
 # Copy directories needed for tests
 COPY consumer/ ./consumer/

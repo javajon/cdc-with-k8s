@@ -1,4 +1,4 @@
-FROM busybox:1.36.1 AS h2-sourcer
+FROM busybox:1.37.0 AS h2-sourcer
 
 # Get h2.jar that offers RunScript tool
 ARG H2_VERSION=1.4.200
