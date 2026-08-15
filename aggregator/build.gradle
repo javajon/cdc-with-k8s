@@ -54,8 +54,24 @@ pact {
             port = Integer.parseInt(System.getenv('PROVIDER_PORT') ?: '30103')
             path = '/'
 
+            // No selectors, which is the documented way to say "the latest pacts".
+            //
+            // This read `selectors = ['tag:master']` and was wrong twice over.
+            //
+            // pact-jvm 4.3 replaced the string form with ConsumerVersionSelectors, so the
+            // 4.7.5 plugin fails during CONFIGURATION - before any task runs - with
+            //
+            //   Failed to access Pact Broker, no provider tasks will be configured -
+            //   class java.lang.String cannot be cast to class
+            //   au.com.dius.pact.core.pactbroker.ConsumerVersionSelectors
+            //
+            // The message blames the broker, which sends you looking at URLs and ports.
+            // The broker was fine; the type was not.
+            //
+            // And nothing here is tagged `master` anyway. pact/package.json publishes with
+            // --consumer-app-version and no --tag, so that selector matched nothing even
+            // while the API still accepted it.
             fromPactBroker {
-                selectors = ['tag:master']
             }
         }
     }
