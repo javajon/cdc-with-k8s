@@ -1,4 +1,12 @@
-FROM node:24-slim
+# PINNED. node:24-slim bundles whatever npm the 24 line currently ships, and on
+# 2026-10-14 node 24.22.0 moved that from npm 11.6.x to 11.19.1. The stricter npm
+# then refused this lockfile outright - "Missing: @emnapi/core from lock file" - and
+# `npm ci` failed the image build, which failed step 6 of the lab. Nothing in the lab
+# had changed; the floating tag moved under it.
+#
+# 24.22.3-slim carries npm 11.19.1, the version package-lock.json is generated and
+# verified against. Bump both together, deliberately.
+FROM node:24.22.3-slim
 
 WORKDIR /app
 
